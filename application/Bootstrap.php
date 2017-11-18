@@ -80,4 +80,9 @@ class Bootstrap extends Yaf_Bootstrap_Abstract
             $dispatcher->setView($view);
         }
     }
+
+    public function _initAutoload()
+    {
+        Yaf_Loader::getInstance(APPLICATION_PATH.'/application')->registerLocalNamespace('requests');
+    }
 }

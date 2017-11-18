@@ -27,7 +27,7 @@ class Service_User
         ])->first();
 
         if (password_verify($password, $user->password)) {
-            $session->set('admin', $user);
+            $session->set('user', $user);
             return $user;
         } else {
             return false;

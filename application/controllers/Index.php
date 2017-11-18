@@ -33,7 +33,7 @@ class IndexController extends ControllerAbstract
         } else {
             $this->redirect('login?error=用户名或密码错误');
         }
-        return true;
+        return false;
     }
 
     public function signOutAction()
