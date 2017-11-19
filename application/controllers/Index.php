@@ -1,4 +1,7 @@
 <?php
+
+use Gregwar\Captcha\CaptchaBuilder;
+
 /**
  * Index.php
  *
@@ -27,13 +30,23 @@ class IndexController extends ControllerAbstract
     {
         $username = $this->_request->getPost('username');
         $password = $this->_request->getPost('password');
-        $user = Service_User::getInstance()->login($username, $password);
+        $captcha = $this->_request->getPost('captcha');
+        $user = Service_User::getInstance()->login($username, $password, $captcha);
         if ($user) {
             $this->redirect('/');
         } else {
             $this->redirect('login?error=用户名或密码错误');
         }
         return false;
+    }
+
+    public function captchaAction()
+    {
+        $builder = new CaptchaBuilder;
+        $builder->build(115, 34);
+        Yaf_Session::getInstance()->set('captcha', mb_strtolower($builder->getPhrase()));
+        header('Content-type: image/jpeg');
+        $builder->output();
     }
 
     public function signOutAction()

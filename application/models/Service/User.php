@@ -17,9 +17,11 @@ class Service_User
     {
         $session = Yaf_Session::getInstance();
         if (!empty($captcha)) {
-            $result = $captcha == $session->get('captcha');
+            $result = mb_strtolower($captcha) == $session->get('captcha');
             $session->del('captcha');
-            return $result;
+            if (!$result) {
+                return false;
+            }
         }
 
         $user = UserModel::where([

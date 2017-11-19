@@ -13,7 +13,8 @@ class AuthPlugin extends Yaf_Plugin_Abstract
 {
     protected $except = [
         '/index/index/login',
-        '/index/index/dologin'
+        '/index/index/dologin',
+        '/index/index/captcha'
     ];
 
     public function routerShutdown(Yaf_Request_Abstract $request, Yaf_Response_Abstract $response)

@@ -43,6 +43,12 @@
                 <input type="password" class="form-control" name="password" placeholder="密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+            <div class="row form-group">
+                <div class="col-xs-7">
+                    <input type="text" class="form-control" name="captcha" placeholder="验证码" value="">
+                </div>
+                <div class="col-xs-5"><img id="captcha" src="captcha" alt=""></div>
+            </div>
             <div class="row">
                 <div class="col-xs-8">
                 </div>
@@ -57,5 +63,11 @@
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $('#captcha').on('click', function () {
+        $('#captcha').attr('src', 'captcha?r='+Math.random())
+    })
+</script>
 </body>
 </html>
