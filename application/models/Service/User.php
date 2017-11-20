@@ -36,9 +36,14 @@ class Service_User
         }
     }
 
-    public function changePassword($userId, $password)
+    public function get($id)
     {
+        return UserModel::find($id);
+    }
 
+    public function update($id, $data)
+    {
+        return UserModel::where('id', $id)->update($data);
     }
 
     public function getPermission($userId)

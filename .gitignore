@@ -6,3 +6,4 @@ log/*
 tests/*
 vendor
 .
+www/upload/avatar/*
