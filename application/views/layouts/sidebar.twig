@@ -15,19 +15,41 @@
             </div>
             <li class="header">菜单</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="index/index/test1">Link in level 2</a></li>
-                    <li><a href="index/index/test2">Link in level 2</a></li>
-                </ul>
-            </li>
+            {% for sideMenu in sideMenus %}
+                {% if sideMenu.sub %}
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-link"></i>
+                            <span>
+                                {{ sideMenu.desc }}
+                            </span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            {% for sideSub in sideMenu.sub %}
+                                <li>
+                                    <a href="{{ sideMenu.url }}">
+                                        <i class="fa fa-link"></i>
+                                        <span>{{ sideMenu.desc }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ sideMenu.url }}">
+                            <i class="fa fa-link"></i> <span>{{ sideMenu.desc }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {#<li class="active">#}
+                {#<a href="#"><i class="fa fa-link"></i> <span>Link</span></a>#}
+            {#</li>#}
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

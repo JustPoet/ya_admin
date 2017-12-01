@@ -14,9 +14,13 @@ abstract class ControllerAbstract extends Yaf_Controller_Abstract
     public function init()
     {
         $session = Yaf_Session::getInstance();
-        if (!empty($session->get('admin'))
-            && $this->_request->getServer('HTTP_X_PJAX') != 'true') {
-            //TODO 获取权限，生成菜单
+        if (
+            !empty($session->get('user'))
+            && $this->_request->getServer('HTTP_X_PJAX') != 'true'
+            && !$this->_request->isCli()
+        ) {
+            $menus = Service_Menu::getInstance()->get();
+            $this->_view->assign('sideMenus', $menus);
         }
     }
 
