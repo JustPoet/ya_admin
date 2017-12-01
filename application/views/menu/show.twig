@@ -1,0 +1,46 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}菜单管理{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="dist/css/nestable.css">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            菜单管理
+            <small>修改个人信息及密码</small>
+        </h1>
+    </section>
+
+    <section class="content container-fluid">
+        <div class="row col-sm-8">
+            <div class="box box-info">
+                <div class="dd">
+                    <ol class="dd-list">
+                        {% for menu in menus %}
+                            <li class="dd-item" data-id="{{ menu.id }}">
+                                <div class="dd-handle">{{ menu.desc }}</div>
+                                {% if menu.sub %}
+                                    <ol class="dd-list">
+                                        {% for sub in menu.sub %}
+                                        <li class="dd-item" data-id="{{ sub.id }}">
+                                            <div class="dd-handle">{{ sub.desc }}</div>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="dist/js/jquery.nestable.js"></script>
+    <script data-exec-on-popstate>
+        $(function () {
+            $('.dd').nestable({});
+        });
+    </script>
+{% endblock %}

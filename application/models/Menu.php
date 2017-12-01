@@ -15,4 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 class MenuModel extends Model
 {
     protected $table = 'menu';
+
+    public function sub()
+    {
+        return $this->hasMany(MenuModel::class, 'parent_id');
+    }
 }
