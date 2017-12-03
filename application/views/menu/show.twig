@@ -13,27 +13,9 @@
     </section>
 
     <section class="content container-fluid">
-        <div class="row col-sm-8">
-            <div class="box box-info">
-                <div class="dd">
-                    <ol class="dd-list">
-                        {% for menu in menus %}
-                            <li class="dd-item" data-id="{{ menu.id }}">
-                                <div class="dd-handle">{{ menu.desc }}</div>
-                                {% if menu.sub %}
-                                    <ol class="dd-list">
-                                        {% for sub in menu.sub %}
-                                        <li class="dd-item" data-id="{{ sub.id }}">
-                                            <div class="dd-handle">{{ sub.desc }}</div>
-                                        </li>
-                                        {% endfor %}
-                                    </ol>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ol>
-                </div>
-            </div>
+        <div class="row">
+            {% include 'menu/menu_list.twig' %}
+            {% include 'menu/create_menu.twig' %}
         </div>
     </section>
 
@@ -41,6 +23,7 @@
     <script data-exec-on-popstate>
         $(function () {
             $('.dd').nestable({});
+            $()
         });
     </script>
 {% endblock %}

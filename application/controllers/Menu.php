@@ -17,4 +17,9 @@ class MenuController extends ControllerAbstract
         $this->_view->assign('menus', $menus);
         return true;
     }
+
+    public function editAction()
+    {
+        return false;
+    }
 }
