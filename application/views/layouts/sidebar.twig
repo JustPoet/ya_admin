@@ -30,9 +30,9 @@
                         <ul class="treeview-menu">
                             {% for sideSub in sideMenu.sub %}
                                 <li>
-                                    <a href="{{ sideMenu.url }}">
+                                    <a href="{{ sideSub.url }}">
                                         <i class="fa fa-link"></i>
-                                        <span>{{ sideMenu.desc }}</span>
+                                        <span>{{ sideSub.desc }}</span>
                                     </a>
                                 </li>
                             {% endfor %}
