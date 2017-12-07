@@ -29,4 +29,27 @@ class Service_Menu
     {
         MenuModel::where('id', $id)->update($data);
     }
+
+    public function updateSort($data)
+    {
+        $menuList = [];
+        foreach ($data as $index => $menu) {
+            $menuList[$menu['id']] = [
+                'order' => $index,
+                'parent_id' => 0
+            ];
+            if (!empty($menu['children'])) {
+                foreach ($menu['children'] as $i => $sub) {
+                    $menuList[$sub['id']] = [
+                        'order' => $i,
+                        'parent_id' => $menu['id']
+                    ];
+                }
+            }
+        }
+
+        foreach ($menuList as $id => $menu) {
+            MenuModel::where('id', $id)->update($menu);
+        }
+    }
 }

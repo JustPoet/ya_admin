@@ -8,7 +8,7 @@
     <section class="content-header">
         <h1>
             菜单管理
-            <small>修改个人信息及密码</small>
+            <small>修改菜单配置</small>
         </h1>
     </section>
 
@@ -22,8 +22,27 @@
     <script src="dist/js/jquery.nestable.js"></script>
     <script data-exec-on-popstate>
         $(function () {
-            $('.dd').nestable({});
-            $()
+            $('.dd').nestable({
+                maxDepth : 2
+            });
+
+            $('#nestable_menu').on('click', function(e) {
+                var target = $(e.target),
+                    action = target.data('action');
+                if (action === 'expand-all') {
+                    $('.dd').nestable('expandAll');
+                }
+                if (action === 'collapse-all') {
+                    $('.dd').nestable('collapseAll');
+                }
+            });
+            
+            $('#btn_save').on('click', function () {
+                var menus = JSON.stringify($('.dd').nestable('serialize'))
+                $.post('/index/menu/updateSort', {menus: menus}, function (json) {
+                    console.log(json)
+                })
+            })
         });
     </script>
 {% endblock %}

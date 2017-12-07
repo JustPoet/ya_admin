@@ -22,4 +22,12 @@ class MenuController extends ControllerAbstract
     {
         return false;
     }
+
+    public function updateSortAction()
+    {
+        $menus = $this->_request->getPost('menus');
+        $menus = json_decode($menus, true);
+        Service_Menu::getInstance()->updateSort($menus);
+        return false;
+    }
 }
