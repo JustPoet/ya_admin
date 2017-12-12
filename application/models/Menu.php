@@ -16,6 +16,8 @@ class MenuModel extends Model
 {
     protected $table = 'menu';
 
+    protected $fillable = ['parent_id', 'desc', 'icon', 'uri', 'order'];
+
     public function sub()
     {
         return $this->hasMany(MenuModel::class, 'parent_id');

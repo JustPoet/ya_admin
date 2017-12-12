@@ -30,7 +30,7 @@
                         {% endif %}
                         <strong>{{ menu.desc }}</strong>
                         <span class="pull-right dd-nodrag">
-                            <a href="/index/menu/edit?id={{ menu.id }}">
+                            <a href="javascript:void(0);" data-id="{{ menu.id }}" class="tree_branch_edit">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <a href="javascript:void(0);" data-id="{{ menu.id }}" class="tree_branch_delete">
@@ -50,7 +50,7 @@
                                 {% endif %}
                                 <strong>{{ sub.desc }}</strong>
                                 <span class="pull-right dd-nodrag">
-                                    <a href="/index/menu/edit?id={{ sub.id }}">
+                                    <a href="javascript:void(0);" data-id="{{ sub.id }}" class="tree_branch_edit">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href="javascript:void(0);" data-id="{{ sub.id }}" class="tree_branch_delete">

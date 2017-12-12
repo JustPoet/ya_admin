@@ -4,7 +4,10 @@
 
 {% block content %}
     <link rel="stylesheet" href="dist/css/nestable.css">
-    <!-- Content Header (Page header) -->
+    <link rel="stylesheet" href="dist/css/fontawesome-iconpicker.min.css">
+    <script src="dist/js/fontawesome-iconpicker.min.js"></script>
+    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+
     <section class="content-header">
         <h1>
             菜单管理
@@ -23,6 +26,7 @@
 
     <script src="dist/js/jquery.nestable.js"></script>
     <script data-exec-on-popstate>
+        var menus = JSON.parse('{{ allMenu|json_encode|raw }}')
         $(function () {
             $('.dd').nestable({
                 maxDepth : 2
@@ -54,9 +58,25 @@
                 })
             })
 
+            $('.tree_branch_edit').on('click', function (e) {
+                var target = $(e.target),
+                    menuId = target.parent().data('id');
+                var menu = menus[menuId][0];
+                for(var key in menu){
+                    $('#m'+key).val(menu[key]);
+                }
+            })
+
+            $('#m_reset_btn').on('click', function () {
+                $('form input').val('')
+            })
+
             $('#btn_refresh').on('click', function () {
                 $.pjax.reload('#pjax-container');
             })
+
+            $('.select2').select2()
+            $('.icon').iconpicker({placement:'bottomLeft'})
         });
     </script>
 {% endblock %}

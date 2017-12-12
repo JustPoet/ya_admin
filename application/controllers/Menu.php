@@ -13,8 +13,11 @@ class MenuController extends ControllerAbstract
 {
     public function showAction()
     {
-        $menus = Service_Menu::getInstance()->get();
+        $menuService = Service_Menu::getInstance();
+        $menus = $menuService->get();
+        $all = $menuService->getAll();
         $this->_view->assign('menus', $menus);
+        $this->_view->assign('allMenu', $all);
         return true;
     }
 
@@ -28,6 +31,25 @@ class MenuController extends ControllerAbstract
         $menus = $this->_request->getPost('menus');
         $menus = json_decode($menus, true);
         Service_Menu::getInstance()->updateSort($menus);
+        return false;
+    }
+
+    public function saveAction()
+    {
+        $param = $this->_request->getPost();
+        $form = new Form_MenuModel($param);
+        if (!$form->validate()) {
+
+        }
+        $id = $this->_request->getPost('menuId', 0);
+        Service_Menu::getInstance()->save($form->getFieldValue(), $id);
+        $this->redirect('show');
+    }
+
+    public function deleteAction()
+    {
+        $id = $this->_request->getPost('id');
+        Service_Menu::getInstance()->del($id);
         return false;
     }
 }

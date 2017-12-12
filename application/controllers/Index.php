@@ -28,16 +28,17 @@ class IndexController extends ControllerAbstract
 
     public function doLoginAction()
     {
-        $form = new Form_LoginModel($this->_request->getPost());
+        $param = $this->_request->getPost();
+        $form = new Form_LoginModel($param);
         if (!$form->validate()) {
             $this->redirect('login?error=' . json_encode($form->getMessages()));
             return false;
         }
-
-        $username = $this->_request->getPost('username');
-        $password = $this->_request->getPost('password');
-        $captcha = $this->_request->getPost('captcha');
-        $user = Service_User::getInstance()->login($username, $password, $captcha);
+        $user = Service_User::getInstance()->login(
+            $param['username'],
+            $param['password'],
+            $param['captcha']
+        );
         if ($user) {
             $this->redirect('/');
         } else {

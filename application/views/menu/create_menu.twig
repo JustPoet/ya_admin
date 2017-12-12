@@ -3,10 +3,70 @@
         <div class="box-header with-border">
             <h3 class="box-title">新增</h3>
         </div>
-        <div class="box-body no-padding">
-            <form action="" method="post" class="form-horizontal" pjax-container="1">
+        <form action="/index/menu/save" method="post" class="form-horizontal" pjax-container="1">
+            <input type="hidden" name="menuId" id="mid" value="0">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="mparent_id" class="col-sm-2 control-label">父菜单</label>
+                    <div class="col-sm-8">
+                        <select class="form-control select2" name="parent_id" style="width: 100%;" id="mparent_id">
+                            <option value="0" selected="selected">根菜单</option>
+                            {% for menu in menus %}
+                                {% if menu.parent_id == 0 %}
+                                    <option value="{{ menu.id }}">{{ menu.desc }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
 
-            </form>
-        </div>
+                <div class="form-group">
+                    <label for="mdesc" class="col-sm-2 control-label">标题</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                            <input type="text" class="form-control title" name="desc" id="mdesc" placeholder="标题">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="micon" class="col-sm-2 control-label">图标</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-bars"></i></span>
+                            <input style="width: 140px" type="text" id="micon" name="icon" value="fa-bars"
+                                   class="form-control icon"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="muri" class="col-sm-2 control-label">路径</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                            <input type="text" class="form-control title" id="muri" name="uri" placeholder="路径">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-2">
+                    <button type="reset" class="btn btn-success btn-sm pull-right" id="m_reset_btn">
+                        <i class="fa fa-refresh"></i>
+                        清除
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-info btn-sm pull-right">
+                        <i class="fa fa-save"></i>
+                        保存
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

@@ -25,6 +25,12 @@ class Service_Menu
         }
     }
 
+    public function getAll()
+    {
+        $menus = MenuModel::all();
+        return $menus->groupBy('id');
+    }
+
     public function update($data, $id)
     {
         MenuModel::where('id', $id)->update($data);
@@ -50,6 +56,27 @@ class Service_Menu
 
         foreach ($menuList as $id => $menu) {
             MenuModel::where('id', $id)->update($menu);
+        }
+    }
+
+    public function firstLevel()
+    {
+        return MenuModel::where('parent_id', 0)->get();
+    }
+
+    public function save($data, $id)
+    {
+        if ($id) {
+            return MenuModel::where('id', $id)->update($data);
+        } else {
+            return MenuModel::create($data);
+        }
+    }
+
+    public function del($id)
+    {
+        if ($id) {
+            MenuModel::where('id', $id)->delete();
         }
     }
 }

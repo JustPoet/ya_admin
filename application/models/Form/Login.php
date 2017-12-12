@@ -23,9 +23,9 @@ class Form_LoginModel extends Form_AbstractModel
                 "validate" => [
                     [
                         "type" => "string",
-                        "min"  => "6",
+                        "min"  => "3",
                         "max"  => "18",
-                        "msg"  => "密码长度6到18位",
+                        "msg"  => "密码长度3到18位",
                     ],
                 ],
             ],
