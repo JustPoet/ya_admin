@@ -31,6 +31,7 @@ class IndexController extends ControllerAbstract
         $username = $this->_request->getPost('username');
         $password = $this->_request->getPost('password');
         $captcha = $this->_request->getPost('captcha');
+
         $user = Service_User::getInstance()->login($username, $password, $captcha);
         if ($user) {
             $this->redirect('/');

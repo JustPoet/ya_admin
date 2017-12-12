@@ -1,68 +1,70 @@
-<div class="col-sm-6">
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <div class="btn-group" id="nestable_menu">
-                <button class="btn btn-primary btn-sm" data-action="expand-all">
-                    <i class="fa fa-plus-square-o"></i>展开
-                </button>
-                <button class="btn btn-primary btn-sm" data-action="collapse-all">
-                    <i class="fa fa-minus-square-o"></i>收起
-                </button>
-            </div>
-            <button class="btn btn-info btn-sm" id="btn_save">
-                <i class="fa fa-save"></i>
-                保存
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <div class="btn-group" id="nestable_menu">
+            <button class="btn btn-primary btn-sm" data-action="expand-all">
+                <i class="fa fa-plus-square-o"></i>展开
+            </button>
+            <button class="btn btn-primary btn-sm" data-action="collapse-all">
+                <i class="fa fa-minus-square-o"></i>收起
             </button>
         </div>
-        <div class="box-body no-padding">
-            <div class="dd">
-                <ol class="dd-list">
-                    {% for menu in menus %}
-                    <li class="dd-item" data-id="{{ menu.id }}">
-                        <div class="dd-handle">
-                            {% if menu.icon %}
-                                <i class="fa {{ menu.icon }}"></i>
-                            {% else %}
-                                <i class="fa fa-link"></i>
-                            {% endif %}
-                            <strong>{{ menu.desc }}</strong>
-                            <span class="pull-right dd-nodrag">
-                                <a href="/index/menu/edit?id={{ menu.id }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="javascript:void(0);" data-id="{{ menu.id }}" class="tree_branch_delete">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </span>
-                        </div>
-                        {% if menu.sub is not empty %}
-                        <ol class="dd-list">
-                            {% for sub in menu.sub %}
-                            <li class="dd-item" data-id="{{ sub.id }}">
-                                <div class="dd-handle">
-                                    {% if sub.icon %}
-                                        <i class="fa {{ sub.icon }}"></i>
-                                    {% else %}
-                                        <i class="fa fa-link"></i>
-                                    {% endif %}
-                                    <strong>{{ sub.desc }}</strong>
-                                    <span class="pull-right dd-nodrag">
-                                        <a href="/index/menu/edit?id={{ sub.id }}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="javascript:void(0);" data-id="{{ sub.id }}" class="tree_branch_delete">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </span>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ol>
+        <button class="btn btn-info btn-sm" id="btn_save">
+            <i class="fa fa-save"></i>
+            保存
+        </button>
+        <button class="btn btn-warning btn-sm" id="btn_refresh">
+            <i class="fa fa-refresh"></i>
+            刷新
+        </button>
+    </div>
+    <div class="box-body no-padding">
+        <div class="dd">
+            <ol class="dd-list">
+                {% for menu in menus %}
+                <li class="dd-item" data-id="{{ menu.id }}">
+                    <div class="dd-handle">
+                        {% if menu.icon is not empty %}
+                            <i class="fa {{ menu.icon }}"></i>
+                        {% else %}
+                            <i class="fa fa-link"></i>
                         {% endif %}
-                    </li>
-                    {% endfor %}
-                </ol>
-            </div>
+                        <strong>{{ menu.desc }}</strong>
+                        <span class="pull-right dd-nodrag">
+                            <a href="/index/menu/edit?id={{ menu.id }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="javascript:void(0);" data-id="{{ menu.id }}" class="tree_branch_delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </span>
+                    </div>
+                    {% if menu.sub is not empty %}
+                    <ol class="dd-list">
+                        {% for sub in menu.sub %}
+                        <li class="dd-item" data-id="{{ sub.id }}">
+                            <div class="dd-handle">
+                                {% if sub.icon %}
+                                    <i class="fa {{ sub.icon }}"></i>
+                                {% else %}
+                                    <i class="fa fa-link"></i>
+                                {% endif %}
+                                <strong>{{ sub.desc }}</strong>
+                                <span class="pull-right dd-nodrag">
+                                    <a href="/index/menu/edit?id={{ sub.id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" data-id="{{ sub.id }}" class="tree_branch_delete">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
 </div>

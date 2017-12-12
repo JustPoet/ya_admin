@@ -28,9 +28,9 @@ class PjaxPlugin extends Yaf_Plugin_Abstract
                     'X-PJAX-URL',
                     $request->getRequestUri()
                 );
+                $response->setBody($body);
             }
         }
-        return true;
     }
 
     protected function filterResponse(Yaf_Response_Abstract $response, $container)

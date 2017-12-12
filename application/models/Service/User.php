@@ -13,15 +13,14 @@ class Service_User
 {
     use Singleton;
 
-    public function login($username, $password, $captcha = '')
+    public function login($username, $password, $captcha)
     {
         $session = Yaf_Session::getInstance();
-        if (!empty($captcha)) {
-            $result = mb_strtolower($captcha) == $session->get('captcha');
-            $session->del('captcha');
-            if (!$result) {
-                return false;
-            }
+
+        $result = mb_strtolower($captcha) == $session->get('captcha');
+        $session->del('captcha');
+        if (!$result) {
+            return false;
         }
 
         $user = UserModel::where([

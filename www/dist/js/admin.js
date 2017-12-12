@@ -7,6 +7,7 @@ $(document).pjax('a:not(a[target="_blank"])', {
 NProgress.configure({ parent: '#pjax-container' });
 
 $(document).on('pjax:timeout', function(event) { event.preventDefault(); })
+$(document).on('pjax:error', function(event) { event.preventDefault(); })
 
 $(document).on('submit', 'form[pjax-container]', function(event) {
     $.pjax.submit(event, '#pjax-container')
