@@ -1,14 +1,14 @@
-<div class="col-sm-6">
+<div class="col-sm-5">
     <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">新增</h3>
+            <h3 class="box-title">编辑</h3>
         </div>
         <form action="/index/menu/save" method="post" class="form-horizontal" pjax-container="1">
             <input type="hidden" name="menuId" id="mid" value="0">
             <div class="box-body">
                 <div class="form-group">
                     <label for="mparent_id" class="col-sm-2 control-label">父菜单</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <select class="form-control select2" name="parent_id" style="width: 100%;" id="mparent_id">
                             <option value="0" selected="selected">根菜单</option>
                             {% for menu in menus %}
@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <label for="mdesc" class="col-sm-2 control-label">标题</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
                             <input type="text" class="form-control title" name="desc" id="mdesc" placeholder="标题">
@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                     <label for="micon" class="col-sm-2 control-label">图标</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-bars"></i></span>
                             <input style="width: 140px" type="text" id="micon" name="icon" value="fa-bars"
@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                     <label for="muri" class="col-sm-2 control-label">路径</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
                             <input type="text" class="form-control title" id="muri" name="uri" placeholder="路径">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="box-footer">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                 </div>
                 <div class="col-sm-2">
                     <button type="reset" class="btn btn-success btn-sm pull-right" id="m_reset_btn">

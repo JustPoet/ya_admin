@@ -19,7 +19,7 @@
                 {% if sideMenu.sub %}
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-link"></i>
+                            <i class="fa {{ sideMenu.icon }}"></i>
                             <span>
                                 {{ sideMenu.desc }}
                             </span>
@@ -31,7 +31,7 @@
                             {% for sideSub in sideMenu.sub %}
                                 <li>
                                     <a href="{{ sideSub.uri }}">
-                                        <i class="fa fa-link"></i>
+                                        <i class="fa {{ sideSub.icon }}"></i>
                                         <span>{{ sideSub.desc }}</span>
                                     </a>
                                 </li>
