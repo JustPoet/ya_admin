@@ -18,6 +18,7 @@ class MenuController extends ControllerAbstract
         $all = $menuService->getAll();
         $this->_view->assign('menus', $menus);
         $this->_view->assign('allMenu', $all);
+
         return true;
     }
 
@@ -31,6 +32,7 @@ class MenuController extends ControllerAbstract
         $menus = $this->_request->getPost('menus');
         $menus = json_decode($menus, true);
         Service_Menu::getInstance()->updateSort($menus);
+
         return false;
     }
 
@@ -50,6 +52,7 @@ class MenuController extends ControllerAbstract
     {
         $id = $this->_request->getPost('id');
         Service_Menu::getInstance()->del($id);
+
         return false;
     }
 }

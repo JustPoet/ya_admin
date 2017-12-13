@@ -13,9 +13,9 @@ class Form_LoginModel extends Form_AbstractModel
 {
     protected $fields
         = [
-            'username'   => [
-                'label'    => '用户名',
-                'name'     => 'username'
+            'username' => [
+                'label' => '用户名',
+                'name'  => 'username',
             ],
             'password' => [
                 'label'    => '密码',
@@ -29,9 +29,9 @@ class Form_LoginModel extends Form_AbstractModel
                     ],
                 ],
             ],
-            'captcha'   => [
-                'label'    => '验证码',
-                'name'     => 'captcha'
+            'captcha'  => [
+                'label' => '验证码',
+                'name'  => 'captcha',
             ],
         ];
 }

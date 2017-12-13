@@ -18,7 +18,7 @@ class UserController extends ControllerAbstract
     public function updateAction()
     {
         $uploader = new FileUpload();
-        $uploader->set('path', APPLICATION_PATH . '/www/upload/avatar/');
+        $uploader->set('path', APPLICATION_PATH.'/www/upload/avatar/');
         $uploader->upload('avatar');
         $avatar = $uploader->getFileName();
         $name = $this->_request->getPost('name');
@@ -28,11 +28,12 @@ class UserController extends ControllerAbstract
         $userId = $session->get('user')->id;
 
         $data = [
-            'name' => $name,
-            'avatar' => 'upload/avatar/' . $avatar
+            'name'   => $name,
+            'avatar' => 'upload/avatar/'.$avatar,
         ];
         if ($password == $confirmPassword && !empty($confirmPassword)) {
-            $data['password'] = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+            $data['password'] = password_hash($password, PASSWORD_BCRYPT,
+                ['cost' => 12]);
         }
         $userService = Service_User::getInstance();
         $success = $userService->update($userId, $data);
@@ -40,6 +41,57 @@ class UserController extends ControllerAbstract
             $session->set('user', $userService->get($userId));
         }
         $this->redirect('/index/user/edit');
+
         return false;
+    }
+
+    public function listAction()
+    {
+        $groups = Service_Group::getInstance()->get();
+        $roles = Service_Role::getInstance()->get();
+        $this->_view->assign(compact('groups', 'roles'));
+        return true;
+    }
+
+    public function pageAction()
+    {
+        $req = $this->_request->getRequest();
+        $page = new Page($req['draw'], $req['length']);
+        $result = Service_User::getInstance()->getPage([], $page);
+        $data = [];
+        foreach ($result['items'] as $index => $user) {
+            $data[] = [
+                'index'    => $index + 1,
+                'username' => $user->username,
+                'name'     => $user->name,
+                'group'    => $user->group->name,
+                'role'     => $user->role->name,
+                'operate'  => "<a href='javascript:void(0);' onclick='edit()' data-id='{$user->id}'>查看</a>",
+            ];
+        }
+
+        $this->out([
+            'draw'            => $req['draw'],
+            'recordsTotal'    => $result['page']->totalCount,
+            'recordsFiltered' => $result['page']->totalCount,
+            'data'            => $data,
+        ]);
+    }
+
+    public function getAction()
+    {
+        $userId = $this->_request->getQuery('id');
+        $user = Service_User::getInstance()->get($userId);
+        $this->out([
+            'code' => 200,
+            'message' => 'success',
+            'data' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'name' => $user->username,
+                'group_id' => $user->group_id,
+                'role_id' => $user->role_id
+            ]
+        ]);
     }
 }

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * $Id$
  */
-
 class MenuModel extends Model
 {
     protected $table = 'menu';

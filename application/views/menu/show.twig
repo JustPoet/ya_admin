@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="dist/css/nestable.css">
     <link rel="stylesheet" href="dist/css/fontawesome-iconpicker.min.css">
     <script src="dist/js/fontawesome-iconpicker.min.js"></script>
-    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 
     <section class="content-header">
         <h1>
@@ -29,10 +28,10 @@
         var menus = JSON.parse('{{ allMenu|json_encode|raw }}')
         $(function () {
             $('.dd').nestable({
-                maxDepth : 2
+                maxDepth: 2
             });
 
-            $('#nestable_menu').on('click', function(e) {
+            $('#nestable_menu').on('click', function (e) {
                 var target = $(e.target),
                     action = target.data('action');
                 if (action === 'expand-all') {
@@ -46,15 +45,15 @@
             $('#btn_save').on('click', function () {
                 var menus = JSON.stringify($('.dd').nestable('serialize'))
                 $.post('/index/menu/updateSort', {menus: menus}, function (json) {
-                    console.log(json)
+                    location.reload()
                 })
             })
 
             $('.tree_branch_delete').on('click', function (e) {
                 var target = $(e.target),
                     menuId = target.parent().data('id');
-                $.post('/index/menu/delete',{id:menuId},function (json) {
-                    $.pjax.reload('#pjax-container');
+                $.post('/index/menu/delete', {id: menuId}, function (json) {
+                    location.reload()
                 })
             })
 
@@ -62,8 +61,8 @@
                 var target = $(e.target),
                     menuId = target.parent().data('id');
                 var menu = menus[menuId][0];
-                for(var key in menu){
-                    $('#m'+key).val(menu[key]);
+                for (var key in menu) {
+                    $('#m' + key).val(menu[key]);
                 }
             })
 
@@ -75,8 +74,8 @@
                 $.pjax.reload('#pjax-container');
             })
 
-            $('.select2').select2()
-            $('.icon').iconpicker({placement:'bottomLeft'})
+            $('.select2').select2();
+            $('.icon').iconpicker({placement: 'bottomLeft'})
         });
     </script>
 {% endblock %}

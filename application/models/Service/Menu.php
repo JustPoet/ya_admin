@@ -28,6 +28,7 @@ class Service_Menu
     public function getAll()
     {
         $menus = MenuModel::all();
+
         return $menus->groupBy('id');
     }
 
@@ -41,14 +42,14 @@ class Service_Menu
         $menuList = [];
         foreach ($data as $index => $menu) {
             $menuList[$menu['id']] = [
-                'order' => $index,
-                'parent_id' => 0
+                'order'     => $index,
+                'parent_id' => 0,
             ];
             if (!empty($menu['children'])) {
                 foreach ($menu['children'] as $i => $sub) {
                     $menuList[$sub['id']] = [
-                        'order' => $i,
-                        'parent_id' => $menu['id']
+                        'order'     => $i,
+                        'parent_id' => $menu['id'],
                     ];
                 }
             }

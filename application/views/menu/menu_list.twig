@@ -21,15 +21,15 @@
         <div class="dd">
             <ol class="dd-list">
                 {% for menu in menus %}
-                <li class="dd-item" data-id="{{ menu.id }}">
-                    <div class="dd-handle">
-                        {% if menu.icon is not empty %}
-                            <i class="fa {{ menu.icon }}"></i>
-                        {% else %}
-                            <i class="fa fa-link"></i>
-                        {% endif %}
-                        <strong>{{ menu.desc }}</strong>
-                        <span class="pull-right dd-nodrag">
+                    <li class="dd-item" data-id="{{ menu.id }}">
+                        <div class="dd-handle">
+                            {% if menu.icon is not empty %}
+                                <i class="fa {{ menu.icon }}"></i>
+                            {% else %}
+                                <i class="fa fa-link"></i>
+                            {% endif %}
+                            <strong>{{ menu.desc }}</strong>
+                            <span class="pull-right dd-nodrag">
                             <a href="javascript:void(0);" data-id="{{ menu.id }}" class="tree_branch_edit">
                                 <i class="fa fa-edit"></i>
                             </a>
@@ -37,19 +37,19 @@
                                 <i class="fa fa-trash"></i>
                             </a>
                         </span>
-                    </div>
-                    {% if menu.sub is not empty %}
-                    <ol class="dd-list">
-                        {% for sub in menu.sub %}
-                        <li class="dd-item" data-id="{{ sub.id }}">
-                            <div class="dd-handle">
-                                {% if sub.icon %}
-                                    <i class="fa {{ sub.icon }}"></i>
-                                {% else %}
-                                    <i class="fa fa-link"></i>
-                                {% endif %}
-                                <strong>{{ sub.desc }}</strong>
-                                <span class="pull-right dd-nodrag">
+                        </div>
+                        {% if menu.sub is not empty %}
+                            <ol class="dd-list">
+                                {% for sub in menu.sub %}
+                                    <li class="dd-item" data-id="{{ sub.id }}">
+                                        <div class="dd-handle">
+                                            {% if sub.icon %}
+                                                <i class="fa {{ sub.icon }}"></i>
+                                            {% else %}
+                                                <i class="fa fa-link"></i>
+                                            {% endif %}
+                                            <strong>{{ sub.desc }}</strong>
+                                            <span class="pull-right dd-nodrag">
                                     <a href="javascript:void(0);" data-id="{{ sub.id }}" class="tree_branch_edit">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -57,12 +57,12 @@
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </span>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ol>
-                    {% endif %}
-                </li>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ol>
         </div>

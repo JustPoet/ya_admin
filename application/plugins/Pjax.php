@@ -11,7 +11,6 @@ use Symfony\Component\DomCrawler\Crawler;
  *
  * $Id$
  */
-
 class PjaxPlugin extends Yaf_Plugin_Abstract
 {
     public function dispatchLoopShutdown(
@@ -33,8 +32,10 @@ class PjaxPlugin extends Yaf_Plugin_Abstract
         }
     }
 
-    protected function filterResponse(Yaf_Response_Abstract $response, $container)
-    {
+    protected function filterResponse(
+        Yaf_Response_Abstract $response,
+        $container
+    ) {
         $crawler = new Crawler($response->getBody());
         $content = $crawler->filter($container);
 

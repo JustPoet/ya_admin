@@ -11,8 +11,27 @@ use Illuminate\Database\Eloquent\Model;
  *
  * $Id$
  */
-
 class UserModel extends Model
 {
     protected $table = 'user';
+
+    protected $fillable
+        = [
+            'username',
+            'name',
+            'password',
+            'avatar',
+            'group_id',
+            'role_id',
+        ];
+
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'role_id');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(GroupModel::class, 'group_id');
+    }
 }

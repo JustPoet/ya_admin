@@ -29,6 +29,7 @@ class Service_User
 
         if (password_verify($password, $user->password)) {
             $session->set('user', $user);
+
             return $user;
         } else {
             return false;
@@ -53,5 +54,15 @@ class Service_User
     public function create($userInfo)
     {
 
+    }
+
+    public function getPage($condition = [], Page $page)
+    {
+        $builder = UserModel::with('role', 'group')->orderBy('created_at');
+        if (!empty($condition)) {
+            $builder = $builder->where($condition);
+        }
+
+        return Pagination::paginate($builder, $page);
     }
 }

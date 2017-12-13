@@ -23,11 +23,9 @@ class ErrorController extends ControllerAbstract
                 'success' => false,
                 'message' => $exception->getMessage(),
             ]);
-
             return false;
         } else {
             $this->_view->assign('error', $error);
-
             return false;
         }
     }

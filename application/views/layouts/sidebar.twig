@@ -16,7 +16,7 @@
             <li class="header">菜单</li>
             <!-- Optionally, you can add icons to the links -->
             {% for sideMenu in sideMenus %}
-                {% if sideMenu.sub %}
+                {% if sideMenu.sub is not empty %}
                     <li class="treeview">
                         <a href="#">
                             <i class="fa {{ sideMenu.icon }}"></i>
@@ -41,15 +41,11 @@
                 {% else %}
                     <li>
                         <a href="{{ sideMenu.uri }}">
-                            <i class="fa fa-link"></i> <span>{{ sideMenu.desc }}</span>
+                            <i class="fa {{ sideMenu.icon }}"></i> <span>{{ sideMenu.desc }}</span>
                         </a>
                     </li>
                 {% endif %}
             {% endfor %}
-            {#<li class="active">#}
-                {#<a href="#"><i class="fa fa-link"></i> <span>Link</span></a>#}
-            {#</li>#}
-
         </ul>
         <!-- /.sidebar-menu -->
     </section>

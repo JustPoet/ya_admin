@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * $Id$
  */
-
 class RoleModel extends Model
 {
     protected $table = 'role';

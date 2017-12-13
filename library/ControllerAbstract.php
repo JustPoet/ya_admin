@@ -26,6 +26,7 @@ abstract class ControllerAbstract extends Yaf_Controller_Abstract
 
     public function out($data)
     {
+        Yaf_Dispatcher::getInstance()->disableView();
         $response = $this->getResponse();
         $outBody = json_encode($data);
         $response->setHeader('Content-type', 'application/json;charset=utf8');

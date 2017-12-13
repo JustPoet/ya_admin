@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}管理后台{% endblock %}</title>
-    <base href="/" />
+    <base href="/"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -31,6 +31,8 @@
     <script src="dist/js/adminlte.min.js"></script>
     <script src="dist/js/jquery.pjax.min.js"></script>
     <script src="dist/js/nprogress.js"></script>
+    <script src="dist/js/sweetalert.min.js"></script>
+    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="dist/js/admin.js"></script>
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
@@ -38,6 +40,12 @@
     {% include 'layouts/header.twig' %}
     {% include 'layouts/sidebar.twig' %}
     <div class="content-wrapper" id="pjax-container">
+        <section class="content-header">
+            <h1>
+                {% block masterTitle %}{% endblock %}
+                <small>{% block subTitle %}{% endblock %}</small>
+            </h1>
+        </section>
         {% block content %}
         {% endblock %}
     </div>

@@ -11,15 +11,19 @@
 
 class AuthPlugin extends Yaf_Plugin_Abstract
 {
-    protected $except = [
-        '/index/index/login',
-        '/index/index/dologin',
-        '/index/index/captcha'
-    ];
+    protected $except
+        = [
+            '/index/index/login',
+            '/index/index/dologin',
+            '/index/index/captcha',
+        ];
 
-    public function routerShutdown(Yaf_Request_Abstract $request, Yaf_Response_Abstract $response)
-    {
-        if (!in_array(mb_strtolower($request->getRequestUri()), $this->except)) {
+    public function routerShutdown(
+        Yaf_Request_Abstract $request,
+        Yaf_Response_Abstract $response
+    ) {
+        if (!in_array(mb_strtolower($request->getRequestUri()),
+            $this->except)) {
             $session = Yaf_Session::getInstance();
             if (empty($session->get('user'))) {
                 $response->setRedirect('/index/index/login');

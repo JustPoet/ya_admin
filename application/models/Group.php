@@ -3,15 +3,15 @@
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Permission.php
+ * Group.php
  *
  * 作者: zhengzean (zhengzean01@gmail.com)
- * 创建日期: 2017/10/30 14:17
+ * 创建日期: 2017/12/13 13:34
  * 修改记录:
  *
  * $Id$
  */
-class PermissionModel extends Model
+class GroupModel extends Model
 {
-    protected $table = 'permission';
+    protected $table = 'group';
 }
