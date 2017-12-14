@@ -60,13 +60,15 @@ class UserController extends ControllerAbstract
         $result = Service_User::getInstance()->getPage([], $page);
         $data = [];
         foreach ($result['items'] as $index => $user) {
+            $operations = $this->_view->render('/user/table_operate.twig', ['user' => $user]);
+
             $data[] = [
                 'index'    => $index + 1,
                 'username' => $user->username,
                 'name'     => $user->name,
                 'group'    => $user->group->name,
                 'role'     => $user->role->name,
-                'operate'  => "<a href='javascript:void(0);' onclick='edit()' data-id='{$user->id}'>查看</a>",
+                'operate'  => $operations,
             ];
         }
 
@@ -93,5 +95,10 @@ class UserController extends ControllerAbstract
                 'role_id' => $user->role_id
             ]
         ]);
+    }
+
+    public function saveAction()
+    {
+
     }
 }

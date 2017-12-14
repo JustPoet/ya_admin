@@ -23,6 +23,7 @@ class UserModel extends Model
             'avatar',
             'group_id',
             'role_id',
+            'status'
         ];
 
     public function role()

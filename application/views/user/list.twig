@@ -14,7 +14,7 @@
             <div class="box-header">
                 <h3 class="box-title">用户列表</h3>
                 <div class="box-tools">
-                    <button class="btn btn-success pull-right btn-flat" id="create_btn">新增</button>
+                    <button class="btn btn-success pull-right btn-flat btn-sm" id="create_btn">新增</button>
                 </div>
             </div>
             <div class="box-body">
@@ -41,11 +41,11 @@
         </div>
     </section>
 
-    <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="user_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form method="post" action="" class="form-horizontal" pjax-container="1">
+                    <form method="post" action="" class="form-horizontal">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -83,7 +83,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-flat">保存</button>
+                    <button type="button" id="btn_save" class="btn btn-primary btn-flat">保存</button>
                 </div>
             </div>
         </div>
@@ -108,17 +108,30 @@
                 $('#user_modal input').val('')
                 $('#user_modal').modal('show')
             })
+            $('#btn_save').on('click', save())
         })
 
-        function edit(e) {
-            var event = e||window.event;
-            var userId = $(event.target).data('id');
+        function edit(userId) {
             $.get('/index/user/get?id='+userId, function (data) {
                 for(key in data.data){
                     $('#'+key).val(data.data[key])
                 }
                 $('#user_modal').modal('show')
             });
+        }
+
+        function ban(userId) {
+
+        }
+
+        function start(userId) {
+
+        }
+
+        function save() {
+            $.post('/index/user/save', function () {
+
+            })
         }
     </script>
 {% endblock %}

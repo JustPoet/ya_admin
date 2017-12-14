@@ -24,8 +24,11 @@ class AuthPlugin extends Yaf_Plugin_Abstract
     ) {
         if (!in_array(mb_strtolower($request->getRequestUri()),
             $this->except)) {
-            $session = Yaf_Session::getInstance();
-            if (empty($session->get('user'))) {
+            $user = Yaf_Session::getInstance()->get('user');
+            if (empty($user)) {
+                $response->setRedirect('/index/index/login');
+            }
+            if (!Service_User::getInstance()->auth($user->id)) {
                 $response->setRedirect('/index/index/login');
             }
         }

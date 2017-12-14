@@ -65,4 +65,23 @@ class Service_User
 
         return Pagination::paginate($builder, $page);
     }
+
+    /**
+     * 权限验证
+     *
+     * @param $id
+     *
+     * @return bool
+     */
+    public function auth($id)
+    {
+        $user = UserModel::find($id);
+        if (!$user) {
+            return false;
+        }
+        if ($user->status == 9) {
+            return false;
+        }
+        return true;
+    }
 }

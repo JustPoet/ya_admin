@@ -26,7 +26,7 @@ class Form_MenuModel extends Form_AbstractModel
                         "type" => "string",
                         "min"  => "1",
                         "max"  => "10",
-                        "msg"  => "标题长度3到10位",
+                        "msg"  => "标题长度1到10位",
                     ],
                 ],
             ],
