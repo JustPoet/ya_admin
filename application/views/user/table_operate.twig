@@ -3,11 +3,11 @@
         <i class="fa fa-edit"></i>&nbsp;&nbsp;查看
     </button>
     {% if user.status == 0 %}
-    <button class='btn btn-danger btn-sm user-ban'  onclick="ban('{{ user.id }}')">
+    <button class='btn btn-danger btn-sm'  onclick="switchStatus('{{ user.id }}', 0)">
         <i class="fa fa-ban"></i>&nbsp;&nbsp;禁用
     </button>
     {% elseif user.status == 9 %}
-    <button class='btn btn-success btn-sm user-start'  onclick="start('{{ user.id }}')">
+    <button class='btn btn-success btn-sm' onclick="switchStatus('{{ user.id }}', 1)">
         <i class="fa fa-check"></i>&nbsp;&nbsp;启用
     </button>
     {% endif %}

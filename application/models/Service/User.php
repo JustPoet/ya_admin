@@ -51,9 +51,15 @@ class Service_User
 
     }
 
-    public function create($userInfo)
+    public function save($userInfo)
     {
-
+        if (empty($userInfo['id'])) {
+            return UserModel::create($userInfo);
+        } else {
+            $id = $userInfo['id'];
+            unset($userInfo['id']);
+            return UserModel::where('id', $id)->update($userInfo);
+        }
     }
 
     public function getPage($condition = [], Page $page)
@@ -83,5 +89,10 @@ class Service_User
             return false;
         }
         return true;
+    }
+
+    public function switchStatus($userId, $status)
+    {
+        return UserModel::where('id', $userId)->update(['status' => $status]);
     }
 }

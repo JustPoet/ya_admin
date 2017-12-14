@@ -50,6 +50,7 @@ class UserController extends ControllerAbstract
         $groups = Service_Group::getInstance()->get();
         $roles = Service_Role::getInstance()->get();
         $this->_view->assign(compact('groups', 'roles'));
+
         return true;
     }
 
@@ -60,7 +61,8 @@ class UserController extends ControllerAbstract
         $result = Service_User::getInstance()->getPage([], $page);
         $data = [];
         foreach ($result['items'] as $index => $user) {
-            $operations = $this->_view->render('/user/table_operate.twig', ['user' => $user]);
+            $operations = $this->_view->render('/user/table_operate.twig',
+                ['user' => $user]);
 
             $data[] = [
                 'index'    => $index + 1,
@@ -85,20 +87,71 @@ class UserController extends ControllerAbstract
         $userId = $this->_request->getQuery('id');
         $user = Service_User::getInstance()->get($userId);
         $this->out([
-            'code' => 200,
+            'code'    => 200,
             'message' => 'success',
-            'data' => [
-                'id' => $user->id,
+            'data'    => [
+                'id'       => $user->id,
                 'username' => $user->username,
-                'name' => $user->username,
+                'name'     => $user->name,
                 'group_id' => $user->group_id,
-                'role_id' => $user->role_id
-            ]
+                'role_id'  => $user->role_id,
+            ],
         ]);
+        return false;
     }
 
     public function saveAction()
     {
+        $form = new Form_UserModel($this->_request->getPost());
+        if (!$form->validate()) {
+            $this->out([
+                'code' => 400,
+                'message' => implode(',', array_values($form->getMessages()))
+            ]);
+            return false;
+        }
 
+        $result = Service_User::getInstance()->save($form->getFieldValue());
+        if ($result) {
+            $this->out([
+                'code'    => 200,
+                'message' => 'success',
+            ]);
+        } else {
+            $this->out([
+                'code'    => 500,
+                'message' => '保存失败',
+            ]);
+        }
+        return false;
+    }
+
+    public function switchStatusAction()
+    {
+        $userId = $this->_request->getPost('userId');
+        $status = $this->_request->getPost('status');
+
+        if (!isset($userId, $status)) {
+            $this->out([
+                'code'    => 400,
+                'message' => '参数不完整',
+            ]);
+            return false;
+        }
+
+        $result = Service_User::getInstance()
+            ->switchStatus($userId, $status ? 0 : 9);
+        if ($result) {
+            $this->out([
+                'code'    => 200,
+                'message' => 'success',
+            ]);
+        } else {
+            $this->out([
+                'code'    => 500,
+                'message' => '更新失败',
+            ]);
+        }
+        return false;
     }
 }

@@ -2,7 +2,6 @@
 
 {% block title %}用户列表{% endblock %}
 {% block masterTitle %}用户列表{% endblock %}
-{% block subTitle %}用户列表{% endblock %}
 
 {% block content %}
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
@@ -73,7 +72,7 @@
                         <div class="form-group">
                             <label for="role_id" class="col-sm-2 control-label">权限组</label>
                             <div class="col-sm-10">
-                                <select class="form-control select2" style="width: 100%" name="group_id" id="group_id">
+                                <select class="form-control select2" style="width: 100%" name="role_id" id="group_id">
                                     {% for role in roles %}
                                         <option value="{{ role.id }}">{{ role.name }}</option>
                                     {% endfor %}
@@ -83,13 +82,39 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn_save" class="btn btn-primary btn-flat">保存</button>
+                    <button type="button" id="btn_save" class="btn btn-success btn-sm btn-flat">
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;保存
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script data-exec-on-popstate>
+        function edit(userId) {
+            $.get('/index/user/get?id='+userId, function (result) {
+                for(key in result.data){
+                    $('#'+key).val(result.data[key])
+                }
+                $('#user_modal').modal('show')
+            });
+        }
+
+        function switchStatus(userId, status) {
+            $.post('/index/user/switchStatus', {userId: userId, status: status}, function (result) {
+                if (result.code == 200) {
+                    $.pjax.reload('#pjax-container')
+                } else {
+                    swal({
+                        title: '',
+                        text: result.message,
+                        icon: 'error',
+                        button: false
+                    })
+                }
+            })
+        }
+
         $(function () {
             var userTableConfig = jQuery.extend(true, {}, dataTableConfig);
             userTableConfig.ajax = '/index/user/page';
@@ -107,31 +132,23 @@
             $('#create_btn').on('click', function () {
                 $('#user_modal input').val('')
                 $('#user_modal').modal('show')
-            })
-            $('#btn_save').on('click', save())
-        })
-
-        function edit(userId) {
-            $.get('/index/user/get?id='+userId, function (data) {
-                for(key in data.data){
-                    $('#'+key).val(data.data[key])
-                }
-                $('#user_modal').modal('show')
             });
-        }
 
-        function ban(userId) {
-
-        }
-
-        function start(userId) {
-
-        }
-
-        function save() {
-            $.post('/index/user/save', function () {
-
+            $('#btn_save').on('click', function () {
+                var userInfo = $('#user_modal form').serialize();
+                $.post('/index/user/save', userInfo, function (result) {
+                    if (result.code == 200) {
+                        $.pjax.reload('#pjax-container')
+                    } else {
+                        swal({
+                            title: '',
+                            text: result.message,
+                            icon: 'error',
+                            button: false
+                        })
+                    }
+                })
             })
-        }
+        })
     </script>
 {% endblock %}
