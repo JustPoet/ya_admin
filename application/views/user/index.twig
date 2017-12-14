@@ -1,0 +1,154 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}用户列表{% endblock %}
+{% block masterTitle %}用户列表{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <section class="content container-fluid">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">用户列表</h3>
+                <div class="box-tools">
+                    <button class="btn btn-success pull-right btn-flat btn-sm" id="create_btn">新增</button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="data_table" class="table table-striped table-bordered jambo_table bulk_action"
+                           cellspacing="0" width="100%">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title">序号</th>
+                            <th class="column-title">用户名</th>
+                            <th class="column-title">姓名</th>
+                            <th class="column-title">用户组</th>
+                            <th class="column-title">权限组</th>
+                            <th class="column-title no-link last">
+                                <span class="nobr">操作</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="user_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="post" action="" class="form-horizontal">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control title" name="username" id="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control title" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label">用户组</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%" name="group_id" id="group_id">
+                                    {% for group in groups %}
+                                        <option value="{{ group.id }}">{{ group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role_id" class="col-sm-2 control-label">权限组</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%" name="role_id" id="group_id">
+                                    {% for role in roles %}
+                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn_save" class="btn btn-success btn-sm btn-flat">
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script data-exec-on-popstate>
+        function edit(userId) {
+            $.get('/index/user/get?id='+userId, function (result) {
+                for(key in result.data){
+                    $('#'+key).val(result.data[key])
+                }
+                $('#user_modal').modal('show')
+            });
+        }
+
+        function switchStatus(userId, status) {
+            $.post('/index/user/switchStatus', {userId: userId, status: status}, function (result) {
+                if (result.code == 200) {
+                    $.pjax.reload('#pjax-container')
+                } else {
+                    swal({
+                        title: '',
+                        text: result.message,
+                        icon: 'error',
+                        button: false
+                    })
+                }
+            })
+        }
+
+        $(function () {
+            var userTableConfig = jQuery.extend(true, {}, dataTableConfig);
+            userTableConfig.ajax = '/index/user/list';
+            userTableConfig.columns = [
+                {data: "index"},
+                {data: "username"},
+                {data: "name"},
+                {data: "group"},
+                {data: "role"},
+                {data: "operate"}
+            ];
+            $('#data_table').DataTable(userTableConfig);
+            $('.select2').select2();
+
+            $('#create_btn').on('click', function () {
+                $('#user_modal input').val('')
+                $('#user_modal').modal('show')
+            });
+
+            $('#btn_save').on('click', function () {
+                var userInfo = $('#user_modal form').serialize();
+                $.post('/index/user/save', userInfo, function (result) {
+                    if (result.code == 200) {
+                        $.pjax.reload('#pjax-container')
+                    } else {
+                        swal({
+                            title: '',
+                            text: result.message,
+                            icon: 'error',
+                            button: false
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}

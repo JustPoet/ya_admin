@@ -1,7 +1,7 @@
 {% extends 'layouts/base.twig' %}
 
-{% block title %}用户列表{% endblock %}
-{% block masterTitle %}用户列表{% endblock %}
+{% block title %}用户组{% endblock %}
+{% block masterTitle %}用户组列表{% endblock %}
 
 {% block content %}
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
@@ -11,7 +11,7 @@
     <section class="content container-fluid">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">用户列表</h3>
+                <h3 class="box-title">用户组列表</h3>
                 <div class="box-tools">
                     <button class="btn btn-success pull-right btn-flat btn-sm" id="create_btn">新增</button>
                 </div>
@@ -23,10 +23,7 @@
                         <thead>
                         <tr class="headings">
                             <th class="column-title">序号</th>
-                            <th class="column-title">用户名</th>
-                            <th class="column-title">姓名</th>
-                            <th class="column-title">用户组</th>
-                            <th class="column-title">权限组</th>
+                            <th class="column-title">名称</th>
                             <th class="column-title no-link last">
                                 <span class="nobr">操作</span>
                             </th>
@@ -47,36 +44,9 @@
                     <form method="post" action="" class="form-horizontal">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">用户名</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control title" name="username" id="username">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">姓名</label>
+                            <label for="name" class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control title" name="name" id="name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label">用户组</label>
-                            <div class="col-sm-10">
-                                <select class="form-control select2" style="width: 100%" name="group_id" id="group_id">
-                                    {% for group in groups %}
-                                        <option value="{{ group.id }}">{{ group.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="role_id" class="col-sm-2 control-label">权限组</label>
-                            <div class="col-sm-10">
-                                <select class="form-control select2" style="width: 100%" name="role_id" id="group_id">
-                                    {% for role in roles %}
-                                        <option value="{{ role.id }}">{{ role.name }}</option>
-                                    {% endfor %}
-                                </select>
                             </div>
                         </div>
                     </form>
@@ -91,8 +61,8 @@
     </div>
 
     <script data-exec-on-popstate>
-        function edit(userId) {
-            $.get('/index/user/get?id='+userId, function (result) {
+        function edit(groupId) {
+            $.get('/index/group/get?id='+groupId, function (result) {
                 for(key in result.data){
                     $('#'+key).val(result.data[key])
                 }
@@ -100,43 +70,25 @@
             });
         }
 
-        function switchStatus(userId, status) {
-            $.post('/index/user/switchStatus', {userId: userId, status: status}, function (result) {
-                if (result.code == 200) {
-                    $.pjax.reload('#pjax-container')
-                } else {
-                    swal({
-                        title: '',
-                        text: result.message,
-                        icon: 'error',
-                        button: false
-                    })
-                }
-            })
-        }
-
         $(function () {
-            var userTableConfig = jQuery.extend(true, {}, dataTableConfig);
-            userTableConfig.ajax = '/index/user/page';
-            userTableConfig.columns = [
+            var groupTableConfig = jQuery.extend(true, {}, dataTableConfig);
+            groupTableConfig.ajax = '/index/group/list';
+            groupTableConfig.columns = [
                 {data: "index"},
-                {data: "username"},
                 {data: "name"},
-                {data: "group"},
-                {data: "role"},
                 {data: "operate"}
             ];
-            $('#data_table').DataTable(userTableConfig);
+            $('#data_table').DataTable(groupTableConfig);
             $('.select2').select2();
 
             $('#create_btn').on('click', function () {
-                $('#user_modal input').val('')
-                $('#user_modal').modal('show')
+                $('#group_modal input').val('')
+                $('#group_modal').modal('show')
             });
 
             $('#btn_save').on('click', function () {
-                var userInfo = $('#user_modal form').serialize();
-                $.post('/index/user/save', userInfo, function (result) {
+                var groupInfo = $('#group_modal form').serialize();
+                $.post('/index/group/save', groupInfo, function (result) {
                     if (result.code == 200) {
                         $.pjax.reload('#pjax-container')
                     } else {

@@ -45,7 +45,7 @@ class UserController extends ControllerAbstract
         return false;
     }
 
-    public function listAction()
+    public function indexAction()
     {
         $groups = Service_Group::getInstance()->get();
         $roles = Service_Role::getInstance()->get();
@@ -54,7 +54,7 @@ class UserController extends ControllerAbstract
         return true;
     }
 
-    public function pageAction()
+    public function listAction()
     {
         $req = $this->_request->getRequest();
         $page = new Page($req['draw'], $req['length']);
