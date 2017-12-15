@@ -11,7 +11,7 @@
 
 class MenuController extends ControllerAbstract
 {
-    public function showAction()
+    public function indexAction()
     {
         $menuService = Service_Menu::getInstance();
         $menus = $menuService->get();

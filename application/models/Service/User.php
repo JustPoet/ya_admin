@@ -41,24 +41,19 @@ class Service_User
         return UserModel::find($id);
     }
 
-    public function update($id, $data)
-    {
-        return UserModel::where('id', $id)->update($data);
-    }
-
     public function getPermission($userId)
     {
 
     }
 
-    public function save($userInfo)
+    public function save($data)
     {
-        if (empty($userInfo['id'])) {
-            return UserModel::create($userInfo);
+        $id = empty($data['id']) ? false : $data['id'];
+        unset($data['id']);
+        if ($id) {
+            return UserModel::create($data);
         } else {
-            $id = $userInfo['id'];
-            unset($userInfo['id']);
-            return UserModel::where('id', $id)->update($userInfo);
+            return UserModel::where('id', $id)->update($data);
         }
     }
 

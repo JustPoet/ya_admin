@@ -13,11 +13,27 @@ class Service_Group
 {
     use Singleton;
 
-    public function get($id = null)
+    public function get($id, Page $page = null)
     {
         if ($id) {
             return GroupModel::find($id);
         }
-        return GroupModel::all();
+        return Pagination::paginate(GroupModel::query(), $page);
+    }
+
+    public function save($data)
+    {
+        $id = empty($data['id']) ? false : $data['id'];
+        unset($data['id']);
+        if ($id) {
+            return GroupModel::create($data);
+        } else {
+            return GroupModel::where('id', $id)->update($data);
+        }
+    }
+
+    public function delete($id)
+    {
+
     }
 }

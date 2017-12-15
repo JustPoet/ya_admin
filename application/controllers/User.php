@@ -28,6 +28,7 @@ class UserController extends ControllerAbstract
         $userId = $session->get('user')->id;
 
         $data = [
+            'id'     => $userId,
             'name'   => $name,
             'avatar' => 'upload/avatar/'.$avatar,
         ];
@@ -36,7 +37,7 @@ class UserController extends ControllerAbstract
                 ['cost' => 12]);
         }
         $userService = Service_User::getInstance();
-        $success = $userService->update($userId, $data);
+        $success = $userService->save($data);
         if ($success) {
             $session->set('user', $userService->get($userId));
         }
@@ -47,7 +48,7 @@ class UserController extends ControllerAbstract
 
     public function indexAction()
     {
-        $groups = Service_Group::getInstance()->get();
+        $groups = Service_Group::getInstance()->get(0);
         $roles = Service_Role::getInstance()->get();
         $this->_view->assign(compact('groups', 'roles'));
 
@@ -61,8 +62,10 @@ class UserController extends ControllerAbstract
         $result = Service_User::getInstance()->getPage([], $page);
         $data = [];
         foreach ($result['items'] as $index => $user) {
-            $operations = $this->_view->render('/user/table_operate.twig',
-                ['user' => $user]);
+            $operations = $this->_view->render(
+                '/user/table_operate.twig',
+                ['user' => $user]
+            );
 
             $data[] = [
                 'index'    => $index + 1,
@@ -97,6 +100,7 @@ class UserController extends ControllerAbstract
                 'role_id'  => $user->role_id,
             ],
         ]);
+
         return false;
     }
 
@@ -105,9 +109,10 @@ class UserController extends ControllerAbstract
         $form = new Form_UserModel($this->_request->getPost());
         if (!$form->validate()) {
             $this->out([
-                'code' => 400,
-                'message' => implode(',', array_values($form->getMessages()))
+                'code'    => 400,
+                'message' => implode(',', array_values($form->getMessages())),
             ]);
+
             return false;
         }
 
@@ -123,6 +128,7 @@ class UserController extends ControllerAbstract
                 'message' => '保存失败',
             ]);
         }
+
         return false;
     }
 
@@ -136,6 +142,7 @@ class UserController extends ControllerAbstract
                 'code'    => 400,
                 'message' => '参数不完整',
             ]);
+
             return false;
         }
 
@@ -152,6 +159,7 @@ class UserController extends ControllerAbstract
                 'message' => '更新失败',
             ]);
         }
+
         return false;
     }
 }
